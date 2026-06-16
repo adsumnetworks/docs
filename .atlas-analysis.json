@@ -1,0 +1,75 @@
+{
+  "projectType": "saas",
+  "projectName": "Adsum IoT Coder",
+  "projectDescription": "An AI coding agent for VS Code that automates the full embedded firmware inner loop — scaffold, build, flash, test, observe, and fix — for Espressif ESP and Nordic nRF platforms.",
+  "theme": "luma",
+  "primaryColor": "#edba33",
+  "lightColor": "#7c742c",
+  "darkColor": "#070605",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "getting-started",
+              "free-tier"
+            ]
+          },
+          {
+            "group": "How It Works",
+            "pages": [
+              "why-it-exists",
+              "architecture",
+              "benchmark"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "models",
+              "platforms-and-roadmap",
+              "privacy-and-security",
+              "troubleshooting"
+            ]
+          },
+          {
+            "group": "Community",
+            "pages": [
+              "contributing"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Full embedded inner loop automation: scaffold, build, flash, test, observe, fix",
+    "Dynamic, on-demand knowledge loading — loads only the modules relevant to the active task",
+    "Human-curated firmware expertise authored by senior IoT engineers, not AI-generated",
+    "Hardware-in-the-loop instrumentation: RTT/UART log capture, J-Link multi-device control",
+    "Zero-friction free tier — no API key, account, or credit card required to start",
+    "Bring-your-own-key support for any OpenAI-compatible provider (cloud or local)",
+    "Support for Nordic nRF52/53/54 (NCS/Zephyr) and Espressif ESP32/S3/C6 (ESP-IDF)",
+    "BLE and Wi-Fi workflow support with roadmap for Thread, Matter, and LTE-M",
+    "Open-source Apache 2.0 license, built on the Cline foundation",
+    "Open benchmark (IoT-FirmwareDebugBench v0.1): 5/6 vs 3/6 bugs at 3.8x fewer tokens vs Claude Code"
+  ],
+  "publicApiSurface": [
+    "VS Code extension: AdsumNetwork.nrf-ai-debugger",
+    "VS Code Settings: API endpoint URL (any OpenAI-compatible endpoint)",
+    "VS Code Settings: API key configuration",
+    "VS Code Settings: model name (e.g. anthropic/claude-haiku-4.5)",
+    "VS Code Settings: prompt caching toggle",
+    "VS Code Settings: telemetry.telemetryLevel opt-out",
+    "Free tier: managed model inference with token-metered usage and balance indicator",
+    "Workflows: prototype, build/flash/debug, add a feature, test & validate",
+    "Hardware support: J-Link, RTT/UART capture, serial monitor, multi-device correlation",
+    "Local model support: Ollama, LM Studio, llama.cpp (OpenAI-compatible endpoint)",
+    "OpenRouter integration: anthropic/claude-haiku-4.5, deepseek/deepseek-v4-pro",
+    "GitHub: github.com/adsumnetworks/Adsum-IoT-Coder (issues, discussions, PRs)"
+  ]
+}

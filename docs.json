@@ -1,0 +1,86 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "luma",
+  "name": "Adsum Networks",
+  "colors": {
+    "primary": "#edba33",
+    "light": "#7c742c",
+    "dark": "#070605"
+  },
+  "logo": {
+    "light": "https://media.brand.dev/3dd400eb-fc13-44f7-9247-d8b2282a9209.png",
+    "dark": "https://media.brand.dev/3dd400eb-fc13-44f7-9247-d8b2282a9209.png"
+  },
+  "favicon": "https://media.brand.dev/077cea45-741e-408e-8053-0040bd2f0a96.png",
+  "appearance": {
+    "default": "light"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "icon": "github",
+        "href": "https://github.com/adsumnetworks/Adsum-IoT-Coder"
+      },
+      {
+        "label": "YouTube",
+        "icon": "youtube",
+        "href": "https://www.youtube.com/@adsumnetworks"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Install Free",
+      "href": "https://marketplace.visualstudio.com/items?itemName=AdsumNetwork.nrf-ai-debugger"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "getting-started",
+              "free-tier"
+            ]
+          },
+          {
+            "group": "How It Works",
+            "pages": [
+              "why-it-exists",
+              "architecture",
+              "benchmark"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "models",
+              "platforms-and-roadmap",
+              "privacy-and-security",
+              "troubleshooting"
+            ]
+          },
+          {
+            "group": "Community",
+            "pages": [
+              "contributing"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/adsumnetworks/Adsum-IoT-Coder",
+      "youtube": "https://www.youtube.com/@adsumnetworks"
+    }
+  },
+  "search": {
+    "prompt": "Search Adsum IoT Coder docs..."
+  }
+}

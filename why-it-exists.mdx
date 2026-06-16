@@ -1,0 +1,61 @@
+---
+title: "Why Adsum IoT Coder Exists for Embedded Firmware Dev"
+sidebarTitle: "Why It Exists"
+description: "General coding agents fail at embedded firmware because the bugs live outside the source file. Adsum handles the routine work and the hard bugs."
+---
+
+Embedded firmware work is two jobs at once: a large volume of routine, repetitive setup, and a handful of genuinely hard problems. General coding agents struggle with both, because neither job lives entirely inside the source file you are editing. Adsum IoT Coder is built around that reality — automating the tedious parts so you can focus your attention where it belongs, and bringing real hardware-in-the-loop capability to the bugs that would otherwise cost you days.
+
+## The routine work you would rather automate
+
+Scaffolding a new project, wiring devicetree and Kconfig, generating logging, adding a BLE service, integrating a sensor driver, writing tests, and bringing up a new board — all of it is tedious, easy to get subtly wrong, and a steady drain on your day. Adsum handles this work idiomatically on both ESP-IDF and nRF Connect SDK, so the boilerplate is done correctly the first time and you spend your time on the parts that are actually yours to own.
+
+## The hard bugs you cannot grep
+
+The failures that cost real days do not show up in the file you are looking at. They live in the interaction between your source, the SDK, the chip, and the live session on the wire. Some examples:
+
+<CardGroup cols={2}>
+  <Card title="Silent GATT breakage" icon="bell-slash">
+    A missing `settings_load()` after `bt_enable()` compiles cleanly, connects
+    cleanly, and silently breaks GATT notifications only after the first
+    reconnect.
+  </Card>
+  <Card title="Runtime flash mismatches" icon="microchip">
+    An ESP-IDF partition or flash-config mismatch that builds without error and
+    only fails at runtime on the device.
+  </Card>
+  <Card title="Connection-parameter drift" icon="arrows-left-right">
+    A Central/Peripheral connection-parameter mismatch that only surfaces when
+    you correlate timestamps across two separate log streams simultaneously.
+  </Card>
+  <Card title="Bond state lost on cold boot" icon="power-off">
+    A BLE peripheral that pairs cleanly under test but drops bond state every
+    cold boot because `CONFIG_BT_SETTINGS` is set without flash storage backing
+    it.
+  </Card>
+</CardGroup>
+
+None of these live in the file you are staring at. Adsum reads the device, captures the live logs, and works them the way a senior engineer would — with the full picture in view.
+
+## What makes it good at the hard parts
+
+The reason Adsum closes bugs that general agents miss is not a more powerful model. It is real human expertise baked into the system. The domain knowledge driving Adsum is curated by engineers who have shipped production firmware on these platforms. It loads on demand, scoped to your chip family and task, and it is validated against an open benchmark on real hardware. That is the difference between an agent that guesses from source and one that knows what to look for. See [how the architecture works](/architecture) for the technical details.
+
+## What working the full inner loop needs
+
+The table below shows the four pillars Adsum is built on, where they stand today, and where the roadmap leads.
+
+| Pillar | Today | Roadmap |
+|:---|:---|:---|
+| **Native SDK integration** | nRF Connect SDK (Zephyr) and ESP-IDF: build, flash, monitor, board-aware project assessment | Older NCS LTS versions, broader ESP-IDF coverage |
+| **Hardware-in-the-loop instrumentation** | Live RTT/UART capture (nRF) and serial-log capture (ESP), J-Link control, multi-device capture and correlation | BLE sniffer, power profiling, spectrum analysis |
+| **Expert-reviewed firmware knowledge** | BLE and Wi-Fi stacks, NCS/Zephyr and ESP-IDF internals, board specifics, curated failure-mode libraries | Thread, Matter, LTE-M; power-budget and protocol-correctness review |
+| **Tool-use skills for the whole loop** | Prototype, add-feature, test & validate, build/flash/debug, log generation and analysis | More workflows as protocols and tooling land |
+
+<Note>
+  The hardware-in-the-loop instrumentation pillar is what separates Adsum from
+  a general chat-based coding agent. Capturing live logs from a real device —
+  and correlating them across multiple boards — is what makes the hard L3 bugs
+  solvable. See the [benchmark](/benchmark) to see that difference measured on
+  real hardware.
+</Note>

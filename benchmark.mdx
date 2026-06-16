@@ -1,0 +1,106 @@
+---
+title: "IoT-FirmwareDebugBench v0.1: Benchmark Results and Analysis"
+sidebarTitle: "Benchmark"
+description: "Adsum IoT Coder vs Claude Code on the same model, real nRF hardware: 5/6 vs 3/6 bugs closed, 3.8× more token-efficient on average."
+---
+
+Adsum IoT Coder versus Claude Code, running the same model (Claude Haiku 4.5): **5/6 vs 3/6** bugs closed, **3.8× more token-efficient** on average, and **up to 13× more efficient** on individual tasks. A clean architecture is only useful if it produces measurably better outcomes, and there was no established public benchmark for AI agents on embedded IoT firmware — so we built one and published it as open source.
+
+## About the benchmark
+
+IoT-FirmwareDebugBench v0.1 adapts methodology from research on expert-skill-augmented LLM evaluation for embedded code generation ([arXiv:2603.19583](https://arxiv.org/abs/2603.19583)). It runs on real hardware, not simulation, because hardware-in-the-loop behavior is exactly what distinguishes embedded firmware debugging from general software work.
+
+**Hardware and SDK.** Real nRF52840 DK and nRF52832 DK boards, NCS v3.2.1 (Zephyr 4.2.99).
+
+**Tasks.** Six BLE-focused tasks across three difficulty levels, each with a precisely injected bug, a defined reproduction procedure, and a known correct fix.
+
+**The key design choice.** Both agents run the same model — Claude Haiku 4.5 — with reasoning disabled and prompt caching enabled identically. This isolates a single variable: the domain architecture. If Adsum outperforms, it is not because it has a more capable model. It is because the architecture wraps the same model differently.
+
+<Tabs>
+  <Tab title="L1 — Visible in logs">
+    Root cause is readable directly from the log output. No cross-referencing or
+    inference required. Tests whether the agent reliably captures and reads logs
+    before attempting a fix.
+  </Tab>
+  <Tab title="L2 — Inference required">
+    Root cause requires inferring from BLE behavior or Kconfig dependency chains.
+    The log alone is not sufficient — the agent must reason about the protocol
+    stack or SDK configuration model.
+  </Tab>
+  <Tab title="L3 — Cross-device correlation">
+    Root cause requires correlating state across two devices or across a full
+    session timeline. The agent must run multi-device capture, align the logs,
+    and reason about the interaction between them.
+  </Tab>
+</Tabs>
+
+## Results
+
+<Frame caption="Bug-closed rate by threshold (BC@k = bug closed within k flashes).">
+  ![Bug-closed rate by threshold, Adsum vs Claude Code](/images/bench-bc-rate.png)
+</Frame>
+
+| Metric | Adsum IoT Coder | Claude Code |
+|:---|:---|:---|
+| BC@1, resolved on first flash | **4 / 6** | 1 / 6 |
+| BC@7, within seven flashes | **5 / 6** | 3 / 6 |
+| L1 (visible in logs) | **2 / 2** | 1 / 2 |
+| L2 (inference required) | **2 / 2** | 2 / 2 |
+| L3 (cross-device) | **1 / 2** | 0 / 2 |
+| Total tokens consumed | **34.3M** | 78.5M |
+| Tokens per resolved task | **1.86M** | 7.15M |
+
+<Frame caption="Token consumption per task: same model, different architecture.">
+  ![Token consumption per task, Adsum vs Claude Code](/images/bench-tokens.png)
+</Frame>
+
+## What the gap shows
+
+Three patterns emerge from the results that point directly back to architectural decisions.
+
+<Accordion title="Static code fix as a failure mode">
+  Claude Code skipped live log capture on two tasks and attempted to diagnose
+  from source alone. On embedded firmware, source-only diagnosis misses the
+  class of bugs that only manifest at runtime on the device — exactly the bugs
+  described in [why Adsum exists](/why-it-exists).
+
+  Adsum's dynamic skill architecture eliminates this failure mode by design:
+  log capture is a first-class, mandatory step in every loaded debug workflow,
+  not an optional action the agent might skip under token or iteration pressure.
+</Accordion>
+
+<Accordion title="Context degradation predicts failure">
+  On one L3 task, the baseline consumed 27M tokens and lost track of the
+  original symptom by the later debug cycles — a textbook "lost in the middle"
+  failure. Adsum resolved the same task at a 148.7k-token peak because the
+  loaded context remained tight and focused throughout the session.
+
+  This is the architectural difference described in [how modules load
+  on demand](/architecture): relevant context stays in the model's effective
+  working set rather than being buried under accumulated, unfocused history.
+</Accordion>
+
+<Accordion title="The gap widens with difficulty">
+  Both agents performed comparably at L2. The gap opened at L3, where Adsum
+  closed 1/2 tasks and Claude Code closed 0/2. Cross-device correlation — 
+  capturing logs from two boards simultaneously, aligning them, and reasoning
+  about the interaction — requires the multi-device capture capability that
+  Adsum's hardware-in-the-loop tooling provides as a structured workflow step.
+  A general agent has no equivalent primitive to reach for.
+</Accordion>
+
+<Note>
+  The benchmark and the tool are two halves of the same commitment: domain-specific
+  AI tooling clean enough to extend, and measurable enough to defend. The full
+  report includes per-task breakdowns, honest discussion of limitations, and
+  instructions for running it yourself on your own hardware.
+</Note>
+
+<Card
+  title="Full benchmark report on GitHub"
+  icon="file-lines"
+  href="https://github.com/adsumnetworks/Adsum-IoT-Coder/blob/main/docs/benchmarks/v0.1-report.md"
+>
+  Per-task breakdown, honest limitations, and how to run IoT-FirmwareDebugBench
+  v0.1 yourself on real nRF hardware.
+</Card>

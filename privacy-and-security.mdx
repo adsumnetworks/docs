@@ -1,0 +1,68 @@
+---
+title: "Data Privacy and Security Within Adsum IoT Coder App"
+sidebarTitle: "Privacy"
+description: "The runtime runs entirely on your machine. Only what the active task needs is sent to the model — your credentials and workspace files stay local."
+---
+
+The Adsum IoT Coder runtime runs entirely on your machine. Outbound network requests go only to the AI provider you configured, and they carry only the data that the active task requires. Nothing is sent in the background, and no data is routed through Adsum servers.
+
+<Note>
+  When you bring your own key, you control which model and endpoint your data reaches. The extension is fully open-source and auditable — you can review every outbound call before you ship to production.
+</Note>
+
+## What is sent to the model
+
+The agent sends only what it needs to complete the task you started:
+
+- **Log snippets** captured by the agent during the active session
+- **Source files and Kconfig** the agent has opened for the current task
+- **Tool-call results** — build output, flash output, and device responses
+
+## What is never sent
+
+The following data never leaves your machine, regardless of your configuration:
+
+- Files outside the active workspace
+- `.env` files, credentials, signing keys, board UUIDs, or MAC addresses
+- Background workspace scans, idle file watchers, or telemetry from the agent runtime itself
+
+## Local model support
+
+If your project cannot allow data to leave the developer's machine, you can run a fully local inference server and point the extension at it. Any OpenAI-compatible endpoint is accepted, including:
+
+<CardGroup cols={2}>
+  <Card title="Ollama" href="https://ollama.com">
+    Run open-weight models locally with a single command. Serves an OpenAI-compatible API at `http://localhost:11434`.
+  </Card>
+  <Card title="LM Studio" href="https://lmstudio.ai">
+    GUI-driven local model runner with an OpenAI-compatible local server. Good for quick experimentation.
+  </Card>
+  <Card title="llama.cpp server" href="https://github.com/ggml-org/llama.cpp">
+    The built-in HTTP server in llama.cpp exposes an OpenAI-compatible endpoint. Use it for maximum control over quantisation and runtime flags.
+  </Card>
+</CardGroup>
+
+<Warning>
+  Small local models often lack reliable native tool-calling. If the agent fails to execute hardware actions or returns plain text instead of tool calls, try a larger quantisation or a cloud model that explicitly supports function-calling. See [Models](/models) for validated options.
+</Warning>
+
+## Telemetry
+
+Adsum collects pseudonymous product analytics to understand how the extension is used and where it fails. The data collected includes:
+
+- Installs and activations
+- Feature and free-tier usage events
+- Detected platform (nRF or ESP)
+- Execution errors
+
+All events are keyed to a random install ID. No account, name, email address, source code, chat content, or device logs are ever collected.
+
+**To opt out**, set the following in your VS Code settings:
+
+```json
+{
+  "telemetry.telemetryLevel": "off"
+}
+```
+
+This is the standard VS Code telemetry toggle and takes effect immediately without a reload.

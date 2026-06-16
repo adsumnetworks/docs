@@ -1,0 +1,65 @@
+---
+title: "Install Adsum IoT Coder and Run Your First Firmware Loop"
+sidebarTitle: "Quickstart"
+description: "Install from the VS Code Marketplace, run the built-in demo with no board required, then open your own nRF or ESP project and get to work."
+---
+
+Adsum IoT Coder installs in seconds from the VS Code Marketplace and starts working immediately — the [free tier](/free-tier) is on by default, so there is no provider screen, no API key, and no configuration required before your first run.
+
+## Install the extension
+
+<Steps>
+  <Step title="Open the Extensions panel">
+    In VS Code, press `Ctrl+Shift+X` (or `Cmd+Shift+X` on macOS) to open the **Extensions** panel.
+  </Step>
+  <Step title="Search and install">
+    Search for **Adsum IoT Coder** and click **Install**. You can also install directly from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AdsumNetwork.nrf-ai-debugger) (extension ID: `AdsumNetwork.nrf-ai-debugger`).
+  </Step>
+  <Step title="Start immediately">
+    The extension activates as soon as installation finishes. The free tier is already on — no key or account needed to continue.
+  </Step>
+</Steps>
+
+<Tip>
+  Want to use your own model or API key? You can add it at any time without restarting. See [Models](/models) for supported providers and recommended settings.
+</Tip>
+
+## See it work in 30 seconds
+
+Before you open any project of your own, try the built-in demo. It debugs a real BLE bug on bundled firmware — capture, analyze, fix — on a genuine failure. No board, no project, and no key required. It is the fastest way to understand how the agent actually behaves.
+
+<Frame>
+  <img src="/images/home-project-closed.png" alt="First run: start a prototype or open your project" />
+</Frame>
+
+## Open your project and the agent adapts
+
+Once you open your nRF or ESP project, the agent reads what it is: it detects your target boards, toolchain, and SDK, then surfaces the right one-click actions for your daily work.
+
+<Frame>
+  <img src="/images/home-project-open.png" alt="With a project open: build, flash & debug, add a feature, test & validate" />
+</Frame>
+
+The four core workflows available once your project is open:
+
+- **Build, flash & debug.** The full loop: build, flash, capture live logs (RTT/UART on nRF, serial monitor on ESP), locate the issue, and iterate until it is resolved. Boards auto-detect, with multi-device capture and source-aware log correlation.
+- **Add a feature.** Wire a new capability — a BLE service, a sensor driver, a shell command, storage — into your actual project, not a throwaway sample.
+- **Start a prototype.** Scaffold a new nRF or ESP-IDF project, set your target SoC, and reach a first successful build.
+- **Test & validate.** Exercise your firmware with host-side tests and on-hardware checks.
+
+After any task completes, the agent suggests where to go next so you are never left at a blank prompt.
+
+## Requirements
+
+| Requirement | Details |
+|:---|:---|
+| **Platforms** | Nordic nRF (nRF Connect SDK / Zephyr) · Espressif ESP32 (ESP-IDF) |
+| **Supported SoCs** | nRF52, nRF53, nRF54 · ESP32, ESP32-S3, ESP32-C6 |
+| **Protocols** | BLE (nRF and ESP) · Wi-Fi (ESP) |
+| **Toolchain** | The [nRF Connect Extension Pack](https://marketplace.visualstudio.com/items?itemName=nordic-semiconductor.nrf-connect-extension-pack) for nRF targets; an ESP-IDF installation for ESP targets (the Espressif VS Code extension is detected automatically if present) |
+| **Python** | 3.8 or newer |
+| **AI provider** | Any OpenAI-compatible endpoint, cloud or local. The [free tier](/free-tier) is on by default. See [Models](/models) for options. |
+
+<Card title="Choose a model" icon="robot" href="/models">
+  Start with Claude Haiku 4.5 — the benchmark model — or bring any OpenAI-compatible key to use your preferred provider.
+</Card>

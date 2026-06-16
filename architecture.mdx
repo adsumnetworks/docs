@@ -1,0 +1,80 @@
+---
+title: "Adsum IoT Coder: Architecture and Design Decisions"
+sidebarTitle: "Architecture"
+description: "Dynamic knowledge loading, task-scoped context, and human-curated firmware expertise: how Adsum wraps the same model to produce better outcomes."
+---
+
+Adsum IoT Coder is built on the open-source [Cline](https://github.com/cline/cline) foundation, with IoT-specific knowledge modules and tool-use skills layered on top. The core design principle is straightforward: the right context, loaded at the right time, from expertise written by engineers who know the stack. Understanding this architecture explains why the [benchmark](/benchmark) results look the way they do — same model, meaningfully different outcomes.
+
+## Modules loaded on demand
+
+Domain knowledge and tool-use skills in Adsum are structured as a framework of discrete, composable modules. Each module is scoped to a specific chip family, protocol stack, or debug capability. When you start a task, the agent assesses your project and what the task requires, then loads only the modules relevant to that task and nothing else.
+
+The task flow from your request to execution looks like this:
+
+```text
+User task ──► Agent assesses project ──► Loads scoped modules ──► Executes
+              (chip family,               (only what's needed     (Build → Flash →
+               protocol stack,             from iot-knowledge/)    Capture → Analyze
+               debug category)                                      → Fix, looped)
+```
+
+The full module tree on disk:
+
+```text
+iot-knowledge/
+├── rules/                  # Platform-agnostic agent constraints
+├── platforms/nrf/          # Nordic nRF (NCS / Zephyr)
+│   ├── boards/             # Per-SoC specifics
+│   ├── sdks/ncs/           # Project structure, Kconfig, BLE stack
+│   ├── workflows/          # Entry-point sequences (start here)
+│   └── actions/            # Subroutines loaded by workflows
+└── platforms/esp/          # Espressif ESP (ESP-IDF)
+```
+
+A concrete example: analyzing a UART log drop on nRF loads the log-analyzer workflow, the capture-logs action, and the NCS SDK module. Debugging a failed BLE connection on a two-board setup additionally pulls in the BLE stack module, the device-identity rule, and the relevant board file. Everything else stays off the context. The model gets exactly what the task requires.
+
+## Why context quality matters
+
+The payoff of this approach is not only avoiding context-window overflow. Even when a full static bundle of all modules would technically fit in the window, loading only the relevant modules keeps domain knowledge in the model's effective working set rather than letting it get buried as the session grows.
+
+This failure mode has a name: **"lost in the middle"** — a well-documented phenomenon where a model with a large but unfocused context loses track of information that appeared earlier in the session. The [benchmark](/benchmark) caught the general-agent baseline hitting exactly this: same model, full context window available, lost the original symptom by the fourth debug cycle. Adsum resolved the same task at a 148.7k-token peak because the loaded context stayed tight and relevant throughout.
+
+<Tip>
+  The academic backing for context-quality-focused design is robust. Adsum's
+  benchmark methodology draws from expert-skill-augmented LLM evaluation
+  research ([arXiv:2603.19583](https://arxiv.org/abs/2603.19583)), and the
+  module-loading architecture aligns with frontier thinking on
+  [context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+  and [Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+  from Anthropic. The direction is equipping a capable general model with
+  curated domain expertise, rather than scaling the model alone.
+</Tip>
+
+## Human-curated, not AI-generated
+
+A common trend in AI tooling is letting agents author and refine their own tool-use skills over time. Our research and experimentation led us in the opposite direction for high-stakes IoT firmware debugging.
+
+The knowledge that drives Adsum is hand-authored or hand-reviewed by senior IoT engineers who have shipped production firmware on these platforms. The reason this matters:
+
+<Accordion title="Why AI-generated skills fall short for firmware">
+  AI-generated skills can read fluently and still encode subtle misunderstandings
+  of a protocol stack or an SDK's initialization order. On a general software
+  task, the agent might self-correct through iteration. On an embedded firmware
+  task — where the feedback loop runs through a real device and a real flash
+  cycle — a subtly wrong understanding of BLE stack state or Kconfig dependency
+  resolution fails in ways the agent cannot self-detect from source alone.
+
+  Expert curation is the bottleneck that keeps the quality bar honest. It is
+  slower to build than letting an AI generate its own playbooks, and that is
+  precisely the point.
+</Accordion>
+
+The result is a system where the modules you load when debugging a BLE bonding failure on nRF52840 reflect what engineers who have debugged that exact failure know — not a statistical average of public documentation.
+
+<Note>
+  The knowledge modules are separate from the agent backend. You interact with
+  Adsum entirely through VS Code; the module loading happens transparently at
+  task start. You do not need to manage which modules are active or configure
+  the loading system directly.
+</Note>

@@ -1,0 +1,62 @@
+---
+title: "AI Model Selection for Embedded IoT Firmware Coding"
+sidebarTitle: "Models"
+description: "Choose the free managed model or bring your own key to any OpenAI-compatible endpoint. Recommended models, settings, and configuration steps."
+---
+
+Adsum IoT Coder works out of the box with a managed model on the [free tier](/free-tier) — no API key or configuration needed. When you want a specific model, higher rate limits, or full control over your AI provider, you can point the extension at any OpenAI-compatible endpoint, whether cloud or local.
+
+<Note>
+  The model you configure must support native **tool-calling** (also called function-calling). Without it, the agent cannot execute hardware actions, trigger build workflows, or drive debug sessions.
+</Note>
+
+## Free tier
+
+The free tier uses a managed model selected and maintained by Adsum. It is the default when you install the extension, and no setup is required. See [Free Tier](/free-tier) for rate limits and eligibility details.
+
+## Bring your own key
+
+To use a different model or provider, open **VS Code Settings**, search for **Adsum IoT Coder**, and fill in your API endpoint URL and key. The extension accepts any OpenAI-compatible base URL, which covers OpenRouter, the DeepSeek API, Anthropic via a compatible gateway, and local servers such as Ollama or LM Studio.
+
+<Steps>
+  <Step title="Open VS Code Settings">
+    Press `Ctrl+,` (or `Cmd+,` on macOS) and search for **Adsum IoT Coder**.
+  </Step>
+  <Step title="Set the API endpoint URL">
+    Paste the base URL for your chosen provider. For OpenRouter, use `https://openrouter.ai/api/v1`.
+  </Step>
+  <Step title="Set the API key">
+    Paste the API key from your provider dashboard.
+  </Step>
+  <Step title="Set the model ID">
+    Enter the model identifier exactly as the provider expects it, for example `anthropic/claude-haiku-4.5`.
+  </Step>
+  <Step title="Save and reload">
+    Save settings and reload the VS Code window to apply the changes.
+  </Step>
+</Steps>
+
+## Recommended models
+
+The table below lists the models we have validated against firmware workflows. All three support native tool-calling.
+
+| Model | Best for | Notes |
+|:---|:---|:---|
+| **Claude Haiku 4.5** | First try and production | The model with IoT-specific [benchmark](/benchmark) evidence behind it. Fast, affordable, and reliable at tool-calling. |
+| **DeepSeek-V4-Pro** | Cost-sensitive long sessions | Larger context window reduces overflow failures on long debug loops, at a lower price per million tokens. Available via [OpenRouter](https://openrouter.ai/deepseek/deepseek-v4-pro) or the [DeepSeek API](https://api-docs.deepseek.com/). |
+| **GLM 5.1** | Worth watching | Previously the cost recommendation; DeepSeek-V4-Pro has since surpassed it on performance, context, and price. Still available as an OpenAI-compatible endpoint. |
+
+## Recommended settings for Claude Haiku 4.5
+
+The configuration below matches the setup used in the [benchmark](/benchmark) and is the starting point we recommend for new users.
+
+| Setting | Value |
+|:---|:---|
+| API provider | OpenRouter (or any OpenAI-compatible endpoint) |
+| Model | `anthropic/claude-haiku-4.5` |
+| Enable thinking | Off |
+| Prompt caching (Advanced) | On |
+
+<Tip>
+  Keeping **Enable thinking** off and **Prompt caching** on gives you the best latency and cost profile for iterative embedded debug loops. Toggle thinking on only if you are exploring complex reasoning tasks.
+</Tip>

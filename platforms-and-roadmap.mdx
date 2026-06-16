@@ -1,0 +1,43 @@
+---
+title: "Supported IoT Platforms and the Development Roadmap"
+sidebarTitle: "Platforms"
+description: "See which nRF and ESP32 chips, protocols, and workflows ship today, what is coming next, and the honest limits of current coverage."
+---
+
+Adsum IoT Coder covers the embedded inner loop across IoT silicon — scaffold, build, flash, test, observe, and fix. It ships today for Nordic nRF and Espressif ESP32, and expands by adding chip families, protocols, and workflows as self-contained modules rather than full rewrites.
+
+## What ships today and what is next
+
+| Category | Shipping today | Next |
+|:---|:---|:---|
+| **Platforms** | Nordic nRF, Espressif ESP32 | More vendors as the community asks |
+| **SoC families** | nRF52, nRF53, nRF54 · ESP32, ESP32-S3, ESP32-C6 | nRF7x (Wi-Fi), nRF9x (cellular), more ESP32 variants |
+| **Protocols** | BLE, Wi-Fi | Thread, Matter, LTE-M |
+| **Workflows** | Prototype, build/flash/debug, add a feature, test & validate, log capture and analysis | Power-budget and protocol-correctness review |
+| **Hardware-in-the-loop** | RTT/UART and serial-log capture, J-Link multi-device control | BLE sniffer, power profiling, spectrum analysis |
+| **Benchmark** | v0.1 — 6 BLE tasks on nRF | v0.2 — 20+ tasks, ESP suite, more comparisons |
+
+CRA-readiness workflows for the EU Cyber Resilience Act are planned as a separate release. The roadmap is shaped by what the community asks for and contributes.
+
+<Tip>
+  Have a chip family, protocol, or workflow you need? [Open an issue or propose a benchmark task](https://github.com/adsumnetworks/Adsum-IoT-Coder/issues) on GitHub — the roadmap is driven by community feedback.
+</Tip>
+
+## Limitations
+
+We publish what is true today, not what we wish were true.
+
+<AccordionGroup>
+  <Accordion title="Scope">
+    Today the extension ships for Nordic nRF52/53/54 (BLE) and Espressif ESP32/S3/C6 (Wi-Fi, BLE). Other Nordic families (nRF7x, nRF9x) and other protocols (Thread, Matter, LTE-M) are on the roadmap, not yet shipping.
+  </Accordion>
+  <Accordion title="Benchmark sample size">
+    Six tasks is a proof of concept, not statistical significance. Benchmark v0.2 targets 20 to 30 tasks and includes an ESP suite alongside expanded nRF coverage.
+  </Accordion>
+  <Accordion title="SDK coverage">
+    All benchmark tasks ran on a single NCS version (v3.2.1). Support for older LTS SDK versions is a roadmap item.
+  </Accordion>
+  <Accordion title="Trademarks">
+    nRF and Nordic Semiconductor are trademarks of Nordic Semiconductor ASA. ESP32 and ESP-IDF are trademarks of Espressif Systems. Adsum IoT Coder is an independent project and is not affiliated with or endorsed by either company.
+  </Accordion>
+</AccordionGroup>

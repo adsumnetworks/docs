@@ -1,0 +1,51 @@
+---
+title: "Adsum IoT Coder: AI Firmware Agent for ESP and nRF"
+sidebarTitle: "Introduction"
+description: "Meet the AI coding agent that works your whole embedded inner loop — scaffold, build, flash, test, observe, and fix — on real hardware."
+---
+
+Adsum IoT Coder is an AI coding agent for VS Code that owns your entire embedded inner loop on Espressif ESP and Nordic nRF platforms: scaffold, build, flash, test, observe, and fix. It automates the routine firmware work you would rather skip, and cracks the runtime bugs that general-purpose agents miss — because it reads your board, not just your code.
+
+What sets it apart is real human expertise baked into the agent, not just a larger model. Adsum is augmented with curated firmware knowledge authored by engineers who have shipped production firmware, loaded on demand, and validated by an [open benchmark](/benchmark) on real hardware. Human-curated, not AI-generated.
+
+<Frame>
+  <img src="/images/hero.gif" alt="Adsum IoT Coder debugging ESP32 and nRF firmware in VS Code" />
+</Frame>
+
+## Shipping today
+
+Adsum IoT Coder supports the most common embedded targets in production use today, with more on the way.
+
+- **Nordic nRF52 / nRF53 / nRF54** on nRF Connect SDK (Zephyr)
+- **Espressif ESP32, ESP32-S3, ESP32-C6** on ESP-IDF
+- **BLE and Wi-Fi**
+- Open source under Apache 2.0
+
+Thread, Matter, LTE-M, and additional chips are on the [roadmap](/platforms-and-roadmap).
+
+## Start here
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" icon="download" href="/getting-started">
+    Install the extension, check requirements, and run your first loop in under a minute.
+  </Card>
+  <Card title="Free Tier" icon="bolt" href="/free-tier">
+    No key, no account, no card. You can point the agent at real firmware in your first minute.
+  </Card>
+  <Card title="How It Works" icon="layer-group" href="/architecture">
+    Learn how dynamic knowledge loading and human-curated expertise power the agent.
+  </Card>
+  <Card title="Benchmark" icon="chart-column" href="/benchmark">
+    See how Adsum compares to Claude Code on the same model, tested on real hardware.
+  </Card>
+</CardGroup>
+
+## The 30-second proof
+
+The numbers below come from running Adsum IoT Coder and Claude Code side-by-side on the same model against the same real nRF hardware bugs. The edge is architecture, not model scale.
+
+<Note>
+  vs Claude Code, same model (Claude Haiku 4.5): **5/6 vs 3/6** bugs closed on real nRF hardware, at **3.8× fewer tokens** on average and **up to 13× fewer tokens** on individual tasks.
+</Note>
+
+[See the full benchmark](/benchmark) for methodology and per-task breakdowns, or [install the extension](https://marketplace.visualstudio.com/items?itemName=AdsumNetwork.nrf-ai-debugger) and run the built-in demo with no board and no key required.

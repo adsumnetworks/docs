@@ -1,0 +1,51 @@
+---
+title: "Two Ways to Contribute to Adsum IoT Coder's Growth"
+sidebarTitle: "Contributing"
+description: "Help Adsum IoT Coder improve by sharing hard-won firmware expertise or contributing open-source code — both paths are open and actively welcomed."
+---
+
+Adsum IoT Coder improves in two distinct ways: through curated embedded firmware knowledge that sharpens the agent's reasoning, and through open-source code contributions that extend what the tool can do. The [benchmark results](/benchmark) show the difference expert-reviewed knowledge makes — same underlying model, dramatically better outcomes because of what sits behind it. Whether you ship nRF and ESP firmware professionally or prefer working at the code level, there is a meaningful way for you to get involved.
+
+<CardGroup cols={2}>
+  <Card title="Contribute Knowledge" icon="brain" href="https://github.com/adsumnetworks/Adsum-IoT-Coder/discussions">
+    Share embedded firmware expertise as a founding contributor — get credited and keep the rights to your work.
+  </Card>
+  <Card title="Contribute Code" icon="code" href="https://github.com/adsumnetworks/Adsum-IoT-Coder/issues">
+    Improve the open-source extension or add benchmark tasks in `evals/` under the Apache-2.0 license.
+  </Card>
+</CardGroup>
+
+## Knowledge contributions
+
+What makes the agent effective is not the model — it is the expertise encoded behind it. The hard-won fixes, platform-specific idioms, and failure-mode patterns that only come from shipping real nRF and ESP firmware cannot be generated; they have to be authored by people who have lived them.
+
+We are building a dedicated authoring studio designed specifically for outside specialists to contribute this knowledge. Founding contributors receive full attribution for their work and retain the rights to everything they write.
+
+<Note>
+  The knowledge base is human-authored and expert-reviewed — not AI-generated. That distinction is what the benchmark gap demonstrates. See [how the benchmark works](/benchmark) for the full picture.
+</Note>
+
+If you have deep experience with nRF or ESP firmware failure modes and want to help shape the agent from the ground up, start a conversation on GitHub Discussions:
+
+[Join the discussion on GitHub →](https://github.com/adsumnetworks/Adsum-IoT-Coder/discussions)
+
+## Code contributions
+
+The Adsum IoT Coder extension is fully open source under the Apache-2.0 license, built on top of [Cline](https://github.com/cline/cline). You can contribute in two ways:
+
+<Steps>
+  <Step title="Improve the extension itself">
+    Fix bugs, add features, or improve the tooling that powers the agent. Browse open issues or open a new one to propose a change.
+  </Step>
+  <Step title="Add a benchmark task">
+    Each task in the `evals/` directory ships with three parts: a bug-injection patch that introduces the defect, a reproduction procedure that confirms the bug is present, and a known-correct fix the agent must produce. Adding well-constructed tasks directly strengthens the evaluation suite described on the [benchmark page](/benchmark).
+  </Step>
+</Steps>
+
+<Tip>
+  If you are new to the codebase, the [architecture overview](/architecture) is the best place to orient yourself before diving into the source.
+</Tip>
+
+Browse open issues and pull requests on GitHub:
+
+[Open an issue or PR on GitHub →](https://github.com/adsumnetworks/Adsum-IoT-Coder/issues)

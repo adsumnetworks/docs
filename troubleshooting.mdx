@@ -1,0 +1,73 @@
+---
+title: "Troubleshooting Common Adsum IoT Coder Setup Issues"
+sidebarTitle: "Troubleshooting"
+description: "Step-by-step fixes for the most common first-run, hardware detection, flash, and AI provider issues you may encounter with Adsum IoT Coder."
+---
+
+Most issues you encounter with Adsum IoT Coder fall into one of a small number of categories: shell environment setup on first run, platform-specific notification helpers, J-Link driver problems, or AI provider configuration. Work through the relevant accordion below for a direct fix.
+
+<AccordionGroup>
+  <Accordion title="Shell integration warning on first run">
+    VS Code shows a shell integration warning when it cannot attach to the terminal session it launched. This is almost always a one-time initialisation race on first install.
+
+    **Fix:** Restart VS Code completely, then open a brand-new terminal session from the Terminal menu. The warning will not reappear after the shell integration script has had a chance to register.
+  </Accordion>
+
+  <Accordion title="Linux notifications fail with ENOENT on task completion">
+    On some minimal Linux desktop installs, the system notification binary is missing, causing an `ENOENT` error when the agent tries to notify you that a task has finished.
+
+    **Fix:** Install the notification helper with:
+
+    ```bash
+    sudo apt install libnotify-bin
+    ```
+
+    No VS Code reload is needed — the next task completion will notify successfully.
+  </Accordion>
+
+  <Accordion title="J-Link not detected or board not auto-detected">
+    The agent cannot reach your board if the J-Link drivers are missing or the device has not enumerated correctly on the USB bus.
+
+    **Fix:**
+
+    1. Confirm that the [SEGGER J-Link drivers](https://www.segger.com/downloads/jlink/) are installed for your operating system.
+    2. Run the following command to check whether your board is visible:
+
+    ```bash
+    nrfjprog --ids
+    ```
+
+    3. If the board does not appear, unplug and re-plug the USB cable, then run the command again.
+    4. If the board appears in `nrfjprog` but the extension still does not detect it, reload the VS Code window with **Developer: Reload Window** from the Command Palette.
+  </Accordion>
+
+  <Accordion title="Flash command fails">
+    A flash failure usually means another process has already locked the J-Link interface. Only one process can hold the J-Link at a time.
+
+    **Fix:** Close any other tool that may be using the debugger — this includes **nRF Connect for Desktop**, **OpenOCD**, or any open debug session in VS Code itself. Once those processes are stopped, re-run the flash command.
+  </Accordion>
+
+  <Accordion title="AI provider authentication errors">
+    Authentication errors appear when the API key is missing, expired, or when the endpoint URL does not match the provider.
+
+    **Fix:**
+
+    1. Open **VS Code Settings** and search for **Adsum IoT Coder**.
+    2. Verify that your **API key** is current and was copied without trailing whitespace.
+    3. Check that the **endpoint URL** matches your provider exactly. For example, OpenRouter uses:
+
+    ```text
+    https://openrouter.ai/api/v1
+    ```
+
+    4. Save settings and retry the task.
+  </Accordion>
+
+  <Accordion title="Model refuses tool calls or returns plain text">
+    When the model returns a plain-text response instead of executing a tool call, the configured model does not support native function-calling, or the model ID is incorrect.
+
+    **Fix:** Switch to a model that explicitly supports native tool-calling. See [Models](/models) for the validated list and the exact settings we recommend. If you are using a local model, note that small quantisations often lack reliable function-calling — try a larger model or a cloud alternative.
+  </Accordion>
+</AccordionGroup>
+
+Still stuck? [Open a Discussion on GitHub](https://github.com/adsumnetworks/Adsum-IoT-Coder/discussions) — we read every one and typically respond within one business day.

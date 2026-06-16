@@ -1,0 +1,68 @@
+---
+title: "Adsum IoT Coder: AI Firmware Agent for ESP and nRF"
+sidebarTitle: "Introduction"
+description: "Adsum IoT Coder is a VS Code AI agent that covers the full embedded inner loop — scaffold, build, flash, test, observe, and fix — for ESP and nRF firmware."
+---
+
+Adsum IoT Coder is an AI coding agent for VS Code that handles your entire embedded firmware workflow on **Espressif ESP** and **Nordic nRF** platforms. Unlike general coding assistants, it reads your board — capturing live logs, correlating multi-device state, and drawing on human-curated firmware expertise — so it can close bugs that only show up at runtime.
+
+<CardGroup cols={2}>
+  <Card title="Install & First Run" icon="rocket" href="/getting-started">
+    Install the extension and run the built-in demo in under 30 seconds.
+  </Card>
+  <Card title="Free Tier" icon="bolt" href="/free-tier">
+    No API key, no account, no card. Start immediately.
+  </Card>
+  <Card title="Why It's Different" icon="layer-group" href="/why-it-exists">
+    Why general agents fail at firmware — and what Adsum does instead.
+  </Card>
+  <Card title="Benchmark Results" icon="chart-column" href="/benchmark">
+    5/6 vs 3/6 bugs on real hardware, at 3.8× fewer tokens vs Claude Code.
+  </Card>
+</CardGroup>
+
+## What ships today
+
+Adsum IoT Coder supports the full inner loop across two major IoT platforms:
+
+- **Nordic nRF52 / nRF53 / nRF54** on nRF Connect SDK (Zephyr) — BLE
+- **Espressif ESP32, ESP32-S3, ESP32-C6** on ESP-IDF — BLE and Wi-Fi
+
+Four built-in workflows cover the daily work: **prototype**, **build/flash/debug**, **add a feature**, and **test & validate**. The agent suggests the next move after every task, so you are never left at a blank prompt.
+
+## Get up and running
+
+<Steps>
+  <Step title="Install the extension">
+    Open the VS Code **Extensions** panel, search for **Adsum IoT Coder**, and click Install. Or go directly to the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=AdsumNetwork.nrf-ai-debugger).
+  </Step>
+  <Step title="Run the built-in demo">
+    The home screen opens a live demo that debugs a real BLE bug on bundled firmware — no board or project required. This is the fastest way to see how the agent works.
+  </Step>
+  <Step title="Open your project">
+    Open your nRF or ESP project folder. The agent detects your platform, boards, and toolchain automatically, then surfaces the right one-click actions for your setup.
+  </Step>
+  <Step title="Add your own key (optional)">
+    The [free tier](/free-tier) is on by default and requires no setup. When you want a specific model or heavier usage, drop in any OpenAI-compatible key in the [Models settings](/models).
+  </Step>
+</Steps>
+
+## Explore the docs
+
+<CardGroup cols={2}>
+  <Card title="Introduction" icon="book-open" href="/introduction">
+    Full product overview: what the agent does, how it works, and what to expect.
+  </Card>
+  <Card title="Architecture" icon="sitemap" href="/architecture">
+    How dynamic knowledge loading keeps the agent focused and token-efficient.
+  </Card>
+  <Card title="Models" icon="robot" href="/models">
+    Choose a model or bring your own OpenAI-compatible key.
+  </Card>
+  <Card title="Platforms & Roadmap" icon="map" href="/platforms-and-roadmap">
+    Current platform support and what's coming next.
+  </Card>
+  <Card title="Privacy & Security" icon="shield" href="/privacy-and-security">
+    What leaves your machine — and what never does.
+  </Card>
+</CardGroup>
